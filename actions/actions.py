@@ -40,7 +40,7 @@ class ActionSetOfficeOpen(Action):
             SlotSet("last_intent", entry_intent)
         ]
 
-class ActionResumeConvo(Action):
+class ActionResumeAfterNoUserInput(Action):
 
     def name(self) -> Text:
         return "action_resume_after_no_user_input"
