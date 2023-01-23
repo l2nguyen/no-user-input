@@ -1,0 +1,43 @@
+version: "3.1"
+
+stories:
+
+- story: greet
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+- story: no user input - continue
+  steps:
+  - intent: vaig_event_noUserInput
+  - action: utter_voz_silencio
+  - intent: affirm
+  - action: action_resume_after_no_user_input
+
+- story: no user input - do not continue
+  steps:
+  - intent: vaig_event_noUserInput
+  - action: utter_voz_silencio
+  - intent: deny
+  - action: utter_despedida
+  # add action hang up if you want
+
+- story: member updates their info, deny update
+  steps:
+  - intent: update_member_info
+  - action: utter_acknowledge_update_info
+  - action: utter_current_address
+  - action: utter_ask_update_address
+  - intent: deny
+  - action: utter_cancel_info_update
+
+- story: member updates their info
+  steps:
+  - intent: update_member_info
+  - action: utter_acknowledge_update_info
+  - action: utter_current_address
+  - action: utter_ask_update_address
+  - intent: affirm
+  - action: utter_ask_new_address
+  - intent: inform
+  - action: utter_update_done

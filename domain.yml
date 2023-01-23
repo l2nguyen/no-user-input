@@ -1,0 +1,76 @@
+version: '3.1'
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+- affirm
+- bot_challenge
+- deny
+- goodbye
+- greet
+- inform
+- update_member_info
+- vaig_event_noUserInput
+actions:
+- action_resume_after_no_user_input
+entities:
+- value
+slots:
+  voz_continuar:
+    type: float
+    initial_value: 0
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: value
+      intent: vaig_event_noUserInput
+  new_address:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_text
+  last_intent:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: custom
+      action: action_get_last_intent
+
+responses:
+  utter_greet:
+  - text: Hey! How are you?
+  utter_goodbye:
+  - text: Bye
+  utter_iamabot:
+  - text: I am a bot, powered by Rasa.
+  utter_voz_silencio:
+  - condition:
+    - type: slot
+      name: voz_continuar
+      value: 1
+    text: Posso ser útil em mais alguma questão?
+  - condition:
+    - type: slot
+      name: voz_continuar
+      value: 2
+    text: Se não tiver mais nenhuma dúvida, a chamada será terminada
+  - text: This is the default message.
+  utter_despedida:
+  - text: |-
+      Caso necessite, estou sempre disponível no Portal das Finanças, acedendo a "contacte-nos".
+      Para um atendimento personalizado, contacte-nos, através do cát, entre as 9 e as 19 horas, nos dias úteis.
+      A AT agradece o seu contacto.
+  utter_faça_o_favor_de_dizer:
+  - text: Em que posso ajudar?
+  utter_acknowledge_update_info:
+  - text: Certainly. I can help you update your address. Let's look at the address on file.
+  utter_current_address:
+  - text: Your address on file is 123 Somewhere Place.
+  utter_ask_update_address:
+  - text: do you want to update your address?
+  utter_ask_new_address:
+  - text: what is your new address?
+  utter_update_done:
+  - text: your address have been updated
+  utter_cancel_info_update:
+  - text: No problem. You can update your address at anytime on our website.
